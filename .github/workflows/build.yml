@@ -16,6 +16,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install Dependencies
+        run: |
+          brew install ldid xz
+          echo "/opt/homebrew/bin" >> $GITHUB_PATH
+          sudo ln -sf /opt/homebrew/bin/ldid /usr/local/bin/ldid || true
+
       - name: Setup Theos & SDK
         run: |
           sudo git clone --recursive --depth 1 https://github.com/theos/theos.git /opt/theos
