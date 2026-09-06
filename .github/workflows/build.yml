@@ -11,8 +11,9 @@ jobs:
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
-      - name: 安装 Flex2Theos 工具
+- name: 安装 Flex2Theos 工具
         run: |
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
           git clone --recursive https://github.com/csu/flex2theos.git
           cd flex2theos
           make
