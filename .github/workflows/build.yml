@@ -1,0 +1,40 @@
+name: Compile Flex Plist to Dylib
+
+on:
+  workflow_dispatch: # 支持在 GitHub 页面手动点击触发编译
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Flex2Theos 工具
+        run: |
+          git clone --recursive https://github.com/csu/flex2theos.git
+          cd flex2theos
+          make
+          sudo cp flex2theos /usr/local/bin/
+
+      - name: 配置 Theos 编译环境
+        uses: Randomblock1/theos-action@v1
+
+      - name: 将 plist 转换为 Theos 工程
+        run: |
+          flex2theos -p patch.plist -o PatchTweak
+
+      - name: 编译出 dylib 文件
+        run: |
+          cd PatchTweak
+          # 设置目标架构为 arm64 和 arm64e (支持 iOS 64位设备及 M1/M2/A12+)
+          echo "ARCHS = arm64 arm64e" >> Makefile
+          echo "TARGET = iphone:clang:latest:14.0" >> Makefile
+          make FINALPACKAGE=1
+
+      - name: 上传编译生成的 dylib 产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-dylib
+          path: PatchTweak/.theos/obj/debug/*.dylib
