@@ -43,40 +43,93 @@ jobs:
               with open("patch.plist", "rb") as f:
                   data = plistlib.load(f)
 
-              patches = data.get("Patches", [data]) if isinstance(data, dict) else data
               logos = ["#import <UIKit/UIKit.h>\n"]
 
-              for patch in patches:
-                  units = patch.get("Units", [])
-                  for unit in units:
-                      target = unit.get("TargetClass")
-                      method = unit.get("MethodObj", {})
-                      display_name = method.get("displayName")
-                      overrides = unit.get("Overrides", [])
+              # 1. 自动适配 AppFix 格式 plist
+              if isinstance(data, dict) and "apps" in data:
+                  apps = data.get("apps", {})
+                  for bundle_id, app_info in apps.items():
+                      rules = app_info.get("rules", [])
+                      for rule in rules:
+                          if not rule.get("enabled", True):
+                              continue
+                          
+                          target_class = rule.get("class")
+                          selector = rule.get("selector")
+                          types = rule.get("types", "")
 
-                      if not target or not display_name:
-                          continue
+                          if not target_class or not selector:
+                              continue
 
-                      ret_val = None
-                      for ov in overrides:
-                          if ov.get("argument") == 0:
-                              val = ov.get("value", {})
-                              if isinstance(val, dict):
-                                  for k, v in val.items():
-                                      if k.upper() in ["BOOL", "BOOLEAN"]:
-                                          ret_val = "YES" if v else "NO"
-                                      elif k.lower() in ["id", "string"]:
-                                          ret_val = "nil" if v in ["(NULL)", "", None] else f"@{repr(v)}"
-                                      else:
-                                          ret_val = str(v)
+                          # 根据 iOS Type Encoding 判断返回值
+                          ret_type = "void"
+                          ret_stmt = ""
+                          if types:
+                              if types.startswith("v"):
+                                  ret_type = "void"
+                                  ret_stmt = ""
+                              elif types.startswith("@"):
+                                  ret_type = "id"
+                                  ret_stmt = "return nil;"
+                              elif types.startswith("B") or types.startswith("c"):
+                                  ret_type = "BOOL"
+                                  ret_stmt = "return NO;"
+                              else:
+                                  ret_type = "NSInteger"
+                                  ret_stmt = "return 0;"
 
-                      logos.append(f"%hook {target}")
-                      logos.append(f"{display_name} {{")
-                      if ret_val is not None:
-                          logos.append(f"    return {ret_val};")
-                      else:
-                          logos.append("    %orig;")
-                      logos.append("}\n%end\n")
+                          # 还原 Objective-C 方法签名
+                          if ":" in selector:
+                              parts = selector.split(":")
+                              sig_parts = []
+                              arg_idx = 1
+                              for p in parts[:-1]:
+                                  sig_parts.append(f"{p}:(id)arg{arg_idx}")
+                                  arg_idx += 1
+                              method_sig = f"-({ret_type})" + " ".join(sig_parts)
+                          else:
+                              method_sig = f"-({ret_type}){selector}"
+
+                          logos.append(f"%hook {target_class}")
+                          logos.append(f"{method_sig} {{")
+                          if ret_stmt:
+                              logos.append(f"    {ret_stmt}")
+                          logos.append("}\n%end\n")
+
+              # 2. 自动适配标准 Flex 3 格式 plist
+              else:
+                  patches = data.get("Patches", [data]) if isinstance(data, dict) else data
+                  for patch in patches:
+                      units = patch.get("Units", [])
+                      for unit in units:
+                          target = unit.get("TargetClass")
+                          method = unit.get("MethodObj", {})
+                          display_name = method.get("displayName")
+                          overrides = unit.get("Overrides", [])
+
+                          if not target or not display_name:
+                              continue
+
+                          ret_val = None
+                          for ov in overrides:
+                              if ov.get("argument") == 0:
+                                  val = ov.get("value", {})
+                                  if isinstance(val, dict):
+                                      for k, v in val.items():
+                                          if k.upper() in ["BOOL", "BOOLEAN"]:
+                                              ret_val = "YES" if v else "NO"
+                                          elif k.lower() in ["id", "string"]:
+                                              ret_val = "nil" if v in ["(NULL)", "", None] else f"@{repr(v)}"
+                                          else:
+                                              ret_val = str(v)
+
+                          logos.append(f"%hook {target}")
+                          logos.append(f"{display_name} {{")
+                          if ret_val is not None:
+                              logos.append(f"    return {ret_val};")
+                          else:
+                              logos.append("    %orig;")
+                          logos.append("}\n%end\n")
 
               with open("Tweak.x", "w", encoding="utf-8") as f:
                   f.write("\n".join(logos))
