@@ -21,9 +21,12 @@ jobs:
           brew install ldid xz || true
 
       - name: Setup Flex2Theos Tool
+        env:
+          GIT_TERMINAL_PROMPT: 0
         run: |
-          # 重定向 SSH 避免子模块克隆拦截 error 128
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          # 自动注入 GITHUB_TOKEN，避免无交互环境下拉取子模块触发账号询问
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
           git clone --recursive https://github.com/csu/flex2theos.git
           cd flex2theos && make && sudo cp flex2theos /usr/local/bin/ && cd ..
 
@@ -37,7 +40,7 @@ jobs:
 
       - name: Convert Plist to Theos Project
         run: |
-          # 自动读取 patch.plist 并生成名为 PatchTweak 的工程
+          # 读取 patch.plist 并生成 PatchTweak 工程
           flex2theos -p patch.plist -o PatchTweak
 
       - name: Build Dylib
@@ -47,7 +50,7 @@ jobs:
           echo "ARCHS = arm64 arm64e" >> Makefile
           echo "PatchTweak_LDFLAGS += -Wl,-segalign,4000" >> Makefile
           
-          # 执行 rootless 格式编译
+          # 执行 rootless 编译
           make FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload Dylib Artifact
