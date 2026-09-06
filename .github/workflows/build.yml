@@ -16,20 +16,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
-        run: |
-          brew install ldid xz || true
-
-      - name: Setup Flex2Theos Tool
-        env:
-          GIT_TERMINAL_PROMPT: 0
-        run: |
-          # 自动注入 GITHUB_TOKEN，避免无交互环境下拉取子模块触发账号询问
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
-          git clone --recursive https://github.com/csu/flex2theos.git
-          cd flex2theos && make && sudo cp flex2theos /usr/local/bin/ && cd ..
-
       - name: Setup Theos & SDK
         run: |
           sudo git clone --recursive --depth 1 https://github.com/theos/theos.git /opt/theos
@@ -38,23 +24,86 @@ jobs:
           rm -rf /opt/theos/sdks
           git clone --depth 1 https://github.com/theos/sdks.git /opt/theos/sdks
 
-      - name: Convert Plist to Theos Project
+      - name: Convert Plist to Logos (Tweak.x)
         run: |
-          # 读取 patch.plist 并生成 PatchTweak 工程
-          flex2theos -p patch.plist -o PatchTweak
+          python3 -c '
+          import plistlib, os
+
+          def parse_plist():
+              if not os.path.exists("patch.plist"):
+                  print("错误: 未找到 patch.plist 文件")
+                  exit(1)
+              
+              with open("patch.plist", "rb") as f:
+                  data = plistlib.load(f)
+
+              patches = data.get("Patches", [data]) if isinstance(data, dict) else data
+              logos = ["#import <UIKit/UIKit.h>\n"]
+
+              for patch in patches:
+                  units = patch.get("Units", [])
+                  for unit in units:
+                      target = unit.get("TargetClass")
+                      method = unit.get("MethodObj", {})
+                      display_name = method.get("displayName")
+                      overrides = unit.get("Overrides", [])
+
+                      if not target or not display_name:
+                          continue
+
+                      ret_val = None
+                      for ov in overrides:
+                          if ov.get("argument") == 0:
+                              val = ov.get("value", {})
+                              if isinstance(val, dict):
+                                  for k, v in val.items():
+                                      if k.upper() in ["BOOL", "BOOLEAN"]:
+                                          ret_val = "YES" if v else "NO"
+                                      elif k.lower() in ["id", "string"]:
+                                          ret_val = "nil" if v in ["(NULL)", "", None] else f"@{repr(v)}"
+                                      else:
+                                          ret_val = str(v)
+
+                      logos.append(f"%hook {target}")
+                      logos.append(f"{display_name} {{")
+                      if ret_val is not None:
+                          logos.append(f"    return {ret_val};")
+                      else:
+                          logos.append("    %orig;")
+                      logos.append("}\n%end\n")
+
+              with open("Tweak.x", "w", encoding="utf-8") as f:
+                  f.write("\n".join(logos))
+              print("已成功解析 patch.plist 并生成 Tweak.x")
+
+          parse_plist()
+          '
+          echo "------ 自动生成的 Tweak.x 代码预览 ------"
+          cat Tweak.x
+          echo "---------------------------------------"
+
+      - name: Generate Makefile
+        run: |
+          cat << 'EOF' > Makefile
+          TARGET := iphone:clang:latest:14.0
+          ARCHS = arm64 arm64e
+
+          include $(THEOS)/makefiles/common.mk
+
+          TWEAK_NAME = PatchTweak
+          PatchTweak_FILES = Tweak.x
+          PatchTweak_CFLAGS = -fobjc-arc
+          PatchTweak_LDFLAGS += -Wl,-segalign,4000
+
+          include $(THEOS_MAKE_PATH)/tweak.mk
+          EOF
 
       - name: Build Dylib
         run: |
-          cd PatchTweak
-          # 追加架构与内存对齐参数，保障 TrollStore 注入兼容性
-          echo "ARCHS = arm64 arm64e" >> Makefile
-          echo "PatchTweak_LDFLAGS += -Wl,-segalign,4000" >> Makefile
-          
-          # 执行 rootless 编译
           make FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload Dylib Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Generated-Dylib
-          path: PatchTweak/.theos/obj/**/*.dylib
+          path: .theos/obj/**/*.dylib
