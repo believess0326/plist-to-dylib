@@ -1,41 +1,64 @@
-name: Compile Flex Plist to Dylib
+name: Flex-to-Dylib CI
 
 on:
-  workflow_dispatch: # 支持在 GitHub 页面手动点击触发编译
+  push:
+    paths:
+      - 'patch.plist'
+      - 'convert.py'
+      - '.github/workflows/**'
+    branches: [ "main" ]
+  workflow_dispatch: 
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-      - name: 检出仓库代码
+      - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-- name: 安装 Flex2Theos 工具
+      - name: Install Dependencies
         run: |
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
-          git clone --recursive https://github.com/csu/flex2theos.git
-          cd flex2theos
-          make
-          sudo cp flex2theos /usr/local/bin/
+          # 使用 --force 确保即使预装了也能正常运行，安装编译必需工具
+          brew install ldid xz || true
 
-      - name: 配置 Theos 编译环境
-        uses: Randomblock1/theos-action@v1
-
-      - name: 将 plist 转换为 Theos 工程
+      - name: Setup Theos
         run: |
-          flex2theos -p patch.plist -o PatchTweak
+          # 建立 Theos 环境并转交所有权，解决权限报错
+          sudo git clone --recursive --depth 1 https://github.com/theos/theos.git /opt/theos
+          sudo chown -R $USER /opt/theos
+          echo "THEOS=/opt/theos" >> $GITHUB_ENV
 
-      - name: 编译出 dylib 文件
+      - name: Setup iOS SDK
         run: |
-          cd PatchTweak
-          # 设置目标架构为 arm64 和 arm64e (支持 iOS 64位设备及 M1/M2/A12+)
-          echo "ARCHS = arm64 arm64e" >> Makefile
-          echo "TARGET = iphone:clang:latest:14.0" >> Makefile
-          make FINALPACKAGE=1
+          # 强制清理已有目录，解决 Exit Code 128 报错
+          rm -rf $THEOS/sdks
+          git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
 
-      - name: 上传编译生成的 dylib 产物
+      - name: Convert Patches to Logos
+        run: |
+          # 运行 Python 脚本处理 patch.plist 并生成 Tweak.x
+          python3 convert.py patch.plist
+          echo "------ 自动生成的 Tweak.x 代码预览 ------"
+          if [ -f Tweak.x ]; then
+            cat Tweak.x
+          else
+            echo "错误: Tweak.x 未能生成，请检查 convert.py 和 patch.plist"
+            exit 1
+          fi
+          echo "---------------------------------------"
+
+      - name: Build Dylib
+        run: |
+          export THEOS=$THEOS
+          # 采用 rootless 方案编译以兼容最新越狱环境和 TrollStore 注入
+          make FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+        
+      - name: Upload Dylib Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: compiled-dylib
-          path: PatchTweak/.theos/obj/debug/*.dylib
+          name: Generated-Dylib
+          # 递归搜索所有生成的 dylib
+          path: .theos/obj/**/*.dylib
