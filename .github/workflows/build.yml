@@ -4,10 +4,9 @@ on:
   push:
     paths:
       - 'patch.plist'
-      - 'convert.py'
       - '.github/workflows/**'
     branches: [ "main" ]
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,49 +15,43 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Install Dependencies
         run: |
-          # 使用 --force 确保即使预装了也能正常运行，安装编译必需工具
           brew install ldid xz || true
 
-      - name: Setup Theos
+      - name: Setup Flex2Theos Tool
         run: |
-          # 建立 Theos 环境并转交所有权，解决权限报错
+          # 重定向 SSH 避免子模块克隆拦截 error 128
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          git clone --recursive https://github.com/csu/flex2theos.git
+          cd flex2theos && make && sudo cp flex2theos /usr/local/bin/ && cd ..
+
+      - name: Setup Theos & SDK
+        run: |
           sudo git clone --recursive --depth 1 https://github.com/theos/theos.git /opt/theos
           sudo chown -R $USER /opt/theos
           echo "THEOS=/opt/theos" >> $GITHUB_ENV
+          rm -rf /opt/theos/sdks
+          git clone --depth 1 https://github.com/theos/sdks.git /opt/theos/sdks
 
-      - name: Setup iOS SDK
+      - name: Convert Plist to Theos Project
         run: |
-          # 强制清理已有目录，解决 Exit Code 128 报错
-          rm -rf $THEOS/sdks
-          git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
-
-      - name: Convert Patches to Logos
-        run: |
-          # 运行 Python 脚本处理 patch.plist 并生成 Tweak.x
-          python3 convert.py patch.plist
-          echo "------ 自动生成的 Tweak.x 代码预览 ------"
-          if [ -f Tweak.x ]; then
-            cat Tweak.x
-          else
-            echo "错误: Tweak.x 未能生成，请检查 convert.py 和 patch.plist"
-            exit 1
-          fi
-          echo "---------------------------------------"
+          # 自动读取 patch.plist 并生成名为 PatchTweak 的工程
+          flex2theos -p patch.plist -o PatchTweak
 
       - name: Build Dylib
         run: |
-          export THEOS=$THEOS
-          # 采用 rootless 方案编译以兼容最新越狱环境和 TrollStore 注入
+          cd PatchTweak
+          # 追加架构与内存对齐参数，保障 TrollStore 注入兼容性
+          echo "ARCHS = arm64 arm64e" >> Makefile
+          echo "PatchTweak_LDFLAGS += -Wl,-segalign,4000" >> Makefile
+          
+          # 执行 rootless 格式编译
           make FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
-        
+
       - name: Upload Dylib Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Generated-Dylib
-          # 递归搜索所有生成的 dylib
-          path: .theos/obj/**/*.dylib
+          path: PatchTweak/.theos/obj/**/*.dylib
