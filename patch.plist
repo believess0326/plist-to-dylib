@@ -60,6 +60,32 @@
 				</dict>
 				<dict>
 					<key>class</key>
+					<string>CSJNativeExpressRewardedVideoAd</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>7BDE1147-FBCA-4BDD-B9B9-E0079785F1A4</string>
+					<key>note</key>
+					<string>视频播放暂停广告</string>
+					<key>returnKind</key>
+					<integer>1</integer>
+					<key>returnValue</key>
+					<false/>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>isShow</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>B16@0:8</string>
+					<key>updatedAt</key>
+					<date>2026-09-15T11:08:23Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
 					<string>CSJSplashViewModel</string>
 					<key>enabled</key>
 					<true/>
@@ -82,6 +108,30 @@
 					<key>updatedAt</key>
 					<date>2026-09-15T10:19:48Z</date>
 				</dict>
+				<dict>
+					<key>class</key>
+					<string>KSVideoAd</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>8E3D2D17-776C-437F-8933-04E0271BB734</string>
+					<key>note</key>
+					<string>视频播放暂停广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>loadAdData</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v16@0:8</string>
+					<key>updatedAt</key>
+					<date>2026-09-15T11:07:57Z</date>
+				</dict>
 			</array>
 			<key>sheets</key>
 			<array>
@@ -93,15 +143,15 @@
 					<key>name</key>
 					<string>主修改页</string>
 					<key>updatedAt</key>
-					<date>2026-09-15T10:26:46Z</date>
+					<date>2026-09-15T11:12:29Z</date>
 				</dict>
 			</array>
 			<key>updatedAt</key>
-			<date>2026-09-15T10:26:46Z</date>
+			<date>2026-09-15T11:12:29Z</date>
 		</dict>
 	</dict>
 	<key>exportedAt</key>
-	<date>2026-09-15T10:30:19Z</date>
+	<date>2026-09-15T11:14:57Z</date>
 	<key>format</key>
 	<string>appfix-config</string>
 	<key>generator</key>
