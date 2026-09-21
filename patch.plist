@@ -4,27 +4,27 @@
 <dict>
 	<key>apps</key>
 	<dict>
-		<key>com.caeur.peoeu</key>
+		<key>com.AreaSplitEven.ssd</key>
 		<dict>
 			<key>name</key>
-			<string>翠涧趣味抹茶</string>
+			<string>河豚观影</string>
 			<key>rules</key>
 			<array>
 				<dict>
 					<key>class</key>
-					<string>ABUKsSplashAdapter</string>
+					<string>ABUNativeAdsManager</string>
 					<key>enabled</key>
 					<true/>
 					<key>id</key>
-					<string>C2B0F2BA-19BE-4551-A987-C19079BC1195</string>
+					<string>4B163371-C805-422A-9C85-9D7C25750C37</string>
 					<key>note</key>
-					<string>启动广告</string>
+					<string>首页弹窗广告</string>
 					<key>returnKind</key>
 					<integer>5</integer>
 					<key>scope</key>
 					<integer>0</integer>
 					<key>selector</key>
-					<string>setSplashAdView:</string>
+					<string>setDelegate:</string>
 					<key>sheet</key>
 					<string>default</string>
 					<key>strategy</key>
@@ -32,7 +32,7 @@
 					<key>types</key>
 					<string>v24@0:8@16</string>
 					<key>updatedAt</key>
-					<date>2026-09-19T13:52:18Z</date>
+					<date>2026-09-21T09:14:44Z</date>
 				</dict>
 				<dict>
 					<key>class</key>
@@ -40,9 +40,9 @@
 					<key>enabled</key>
 					<true/>
 					<key>id</key>
-					<string>19B2E0EC-3ACA-41CB-9F64-012D3D530D7C</string>
+					<string>6DB5443B-CA93-4DE9-9147-9BB03B5C990A</string>
 					<key>note</key>
-					<string>我的界面底部广告</string>
+					<string>我的界面底部横幅广告</string>
 					<key>returnKind</key>
 					<integer>5</integer>
 					<key>scope</key>
@@ -56,23 +56,21 @@
 					<key>types</key>
 					<string>v16@0:8</string>
 					<key>updatedAt</key>
-					<date>2026-09-15T10:13:47Z</date>
+					<date>2026-09-21T10:41:40Z</date>
 				</dict>
 				<dict>
 					<key>class</key>
-					<string>CSJNativeExpressAdManager</string>
+					<string>BaiduMobAdExpressIntViewController</string>
 					<key>enabled</key>
 					<true/>
 					<key>id</key>
-					<string>B808EBFE-A759-4A8C-BB5F-B8E21861020F</string>
-					<key>note</key>
-					<string>首页弹窗广告</string>
+					<string>26645621-D475-431D-B30D-C417AF72A242</string>
 					<key>returnKind</key>
 					<integer>5</integer>
 					<key>scope</key>
 					<integer>0</integer>
 					<key>selector</key>
-					<string>setAdManager:</string>
+					<string>setDelegate:</string>
 					<key>sheet</key>
 					<string>default</string>
 					<key>strategy</key>
@@ -80,425 +78,15 @@
 					<key>types</key>
 					<string>v24@0:8@16</string>
 					<key>updatedAt</key>
-					<date>2026-09-19T12:11:28Z</date>
+					<date>2026-09-21T09:46:37Z</date>
 				</dict>
 				<dict>
 					<key>class</key>
-					<string>CSJNativeExpressAdView</string>
+					<string>BaiduMobAdExpressIntViewController</string>
 					<key>enabled</key>
 					<true/>
 					<key>id</key>
-					<string>20B20E7B-6E18-4A0F-A2BE-3DED92FE6BEE</string>
-					<key>note</key>
-					<string>视频播放暂停广告</string>
-					<key>returnKind</key>
-					<integer>1</integer>
-					<key>returnValue</key>
-					<false/>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>isShowing</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>B16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-19T13:55:48Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJNativeExpressRewardedVideoAd</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>7BDE1147-FBCA-4BDD-B9B9-E0079785F1A4</string>
-					<key>note</key>
-					<string>视频播放暂停广告</string>
-					<key>returnKind</key>
-					<integer>1</integer>
-					<key>returnValue</key>
-					<false/>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>isShow</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>B16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-15T11:08:23Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJNativeExpressRewardedVideoAdDisplayViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>5D725FAF-DFD7-4AA8-BDE1-CCD63A112AD9</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>setRewardExpressAdView:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v24@0:8@16</string>
-					<key>updatedAt</key>
-					<date>2026-09-20T11:35:25Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJNativeExpressRewardedVideoAdViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>23B09282-D31D-486B-A737-D1AFF4F9E673</string>
-					<key>note</key>
-					<string>视频播放暂停广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>setAdSlot:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v24@0:8@16</string>
-					<key>updatedAt</key>
-					<date>2026-09-19T13:54:48Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJNativeExpressRewardedVideoAdViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>F3206D4C-ED7A-487E-B033-E41F79E1D5A5</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>setViewModel:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v24@0:8@16</string>
-					<key>updatedAt</key>
-					<date>2026-09-20T11:38:02Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJNativeExpressSplashVideoAdView</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>92DFFC5E-4F3F-473E-A6B8-BC5E2CFD7CF4</string>
-					<key>note</key>
-					<string>启动广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>initWithFrame:nativeAd:nativeExpressAdViewSource:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>@64@0:8{CGRect={CGPoint=dd}{CGSize=dd}}16@48q56</string>
-					<key>updatedAt</key>
-					<date>2026-09-15T11:44:34Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJSplashView</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>BCA72C4D-DBA7-4E2A-B380-653CD694B81D</string>
-					<key>note</key>
-					<string>启动广告</string>
-					<key>returnKind</key>
-					<integer>1</integer>
-					<key>returnValue</key>
-					<false/>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>isShowed</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>B16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-15T11:44:44Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJSplashViewModel</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>4BE3E985-B75D-4EEF-90D5-6895162F1331</string>
-					<key>note</key>
-					<string>启动广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>setAdManager:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v24@0:8@16</string>
-					<key>updatedAt</key>
-					<date>2026-09-15T10:19:48Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>GDTAdDataManager</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>05A6BAE6-981B-4CD5-AB44-32FD89C0E17C</string>
-					<key>note</key>
-					<string>首页弹窗广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>loadAd:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v24@0:8@16</string>
-					<key>updatedAt</key>
-					<date>2026-09-19T12:07:11Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>GDTBaseIMP</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>1CF6F98F-BAD3-4672-84ED-9F648ECFEDF0</string>
-					<key>note</key>
-					<string>视频播放暂停广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>loadAd</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-19T12:07:33Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>GDTSplashAdImp</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>57CC3F54-8AD1-4CC0-9406-974716775DDA</string>
-					<key>note</key>
-					<string>启动广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>loadAd:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v20@0:8B16</string>
-					<key>updatedAt</key>
-					<date>2026-09-19T11:46:42Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>KSAdBaseCardView</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>53030804-8192-4F4F-88B8-5DA92A5D9280</string>
-					<key>returnKind</key>
-					<integer>1</integer>
-					<key>returnValue</key>
-					<false/>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>isLoading</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>B16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-20T11:09:29Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>KSAdInterstitialViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>BDD20F04-D611-4225-9106-C524B8B0CC00</string>
-					<key>note</key>
-					<string>首页弹窗广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>setAdInfos:</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v24@0:8@16</string>
-					<key>updatedAt</key>
-					<date>2026-09-20T10:55:52Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>KSSplashAdView</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>B5FFFFAF-D52C-4FAB-9543-CB26F8FA587A</string>
-					<key>note</key>
-					<string>启动广告</string>
-					<key>returnKind</key>
-					<integer>1</integer>
-					<key>returnValue</key>
-					<false/>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>showingSplashAd</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>B16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-19T11:46:34Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>KSVideoAd</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>8E3D2D17-776C-437F-8933-04E0271BB734</string>
-					<key>note</key>
-					<string>视频播放暂停广告</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>loadAdData</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-15T11:07:57Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>KSVideoAdViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>1C3AD909-3F8D-4D4C-B094-87A9FEF33FD8</string>
-					<key>returnKind</key>
-					<integer>1</integer>
-					<key>returnValue</key>
-					<false/>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>canShowAdClickDialog</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>B16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-20T11:31:44Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>KSVideoAdViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>1C500334-EFA3-4105-9978-C9D205B39889</string>
-					<key>returnKind</key>
-					<integer>5</integer>
-					<key>scope</key>
-					<integer>0</integer>
-					<key>selector</key>
-					<string>loadWebCardIfNeed</string>
-					<key>sheet</key>
-					<string>default</string>
-					<key>strategy</key>
-					<integer>0</integer>
-					<key>types</key>
-					<string>v16@0:8</string>
-					<key>updatedAt</key>
-					<date>2026-09-20T11:31:18Z</date>
-				</dict>
-				<dict>
-					<key>class</key>
-					<string>CSJNativeExpressRewardedVideoAdViewController</string>
-					<key>enabled</key>
-					<true/>
-					<key>id</key>
-					<string>F3721A61-301C-4289-B30D-9C065C64AD8C</string>
+					<string>BBDA6089-43F3-4CA1-8796-0E6CD918793D</string>
 					<key>returnKind</key>
 					<integer>5</integer>
 					<key>scope</key>
@@ -512,28 +100,207 @@
 					<key>types</key>
 					<string>v16@0:8</string>
 					<key>updatedAt</key>
-					<date>2026-09-20T11:38:20Z</date>
+					<date>2026-09-21T09:47:18Z</date>
 				</dict>
-			</array>
-			<key>sheets</key>
-			<array>
 				<dict>
+					<key>class</key>
+					<string>BaiduMobAdExpressIntViewController</string>
 					<key>enabled</key>
 					<true/>
 					<key>id</key>
+					<string>FF1C4D98-839C-440B-97BF-48A15EBD7733</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>viewWillAppear:</string>
+					<key>sheet</key>
 					<string>default</string>
-					<key>name</key>
-					<string>主修改页</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v20@0:8B16</string>
 					<key>updatedAt</key>
-					<date>2026-09-15T11:12:29Z</date>
+					<date>2026-09-21T09:47:28Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>BaiduMobAdSplash</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>2C77921A-1B3A-4AEA-9B13-60487DFCDC90</string>
+					<key>note</key>
+					<string>启动广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>setDelegate:</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v24@0:8@16</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T08:37:43Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>CSJNativeExpressAdManager</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>EB17F168-2370-4D5F-A583-F3A84DAEEEFF</string>
+					<key>note</key>
+					<string>首页弹窗广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>setDelegate:</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v24@0:8@16</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T08:41:38Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>CSJSplashAd</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>3496B92E-3761-413D-9A4A-760D6D7718B0</string>
+					<key>note</key>
+					<string>启动广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>setDelegate:</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v24@0:8@16</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T08:37:57Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>GDTInterstitialDLContent</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>72B9B2F8-5541-4733-B04F-E18A70E9295E</string>
+					<key>note</key>
+					<string>首页弹窗广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>setDelegate:</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v24@0:8@16</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T08:46:49Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>GDTMaskViewController</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>CAA3698B-2031-40D1-8F2D-C29F33ECD100</string>
+					<key>note</key>
+					<string>首页弹窗广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>setContentView:</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v24@0:8@16</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T09:15:42Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>GDTMaskViewController</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>0AD4DAF2-CED1-4073-8C31-157ECDEF3717</string>
+					<key>note</key>
+					<string>首页弹窗广告</string>
+					<key>returnKind</key>
+					<integer>5</integer>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>viewDidLoad</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>v16@0:8</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T09:15:52Z</date>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>GDTSplashAdImp</string>
+					<key>enabled</key>
+					<true/>
+					<key>id</key>
+					<string>A1DEA786-B5BE-4548-9BE0-1EE035251CE6</string>
+					<key>note</key>
+					<string>启动广告</string>
+					<key>returnKind</key>
+					<integer>1</integer>
+					<key>returnValue</key>
+					<false/>
+					<key>scope</key>
+					<integer>0</integer>
+					<key>selector</key>
+					<string>loading</string>
+					<key>sheet</key>
+					<string>default</string>
+					<key>strategy</key>
+					<integer>0</integer>
+					<key>types</key>
+					<string>B16@0:8</string>
+					<key>updatedAt</key>
+					<date>2026-09-21T08:38:09Z</date>
 				</dict>
 			</array>
 			<key>updatedAt</key>
-			<date>2026-09-20T11:38:20Z</date>
+			<date>2026-09-21T10:41:40Z</date>
 		</dict>
 	</dict>
 	<key>exportedAt</key>
-	<date>2026-09-20T12:52:49Z</date>
+	<date>2026-09-21T12:26:06Z</date>
 	<key>format</key>
 	<string>appfix-config</string>
 	<key>generator</key>
